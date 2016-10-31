@@ -24,5 +24,4 @@
   2）如果PrivilegeMaster字段是CF_Role,则判断PrivilegeMasterKey是否等于在第二步中查找的RoleID,是就并入查询结果集
 ***
 查询代码： select DISTINCT B.BtnName,B.BtnID from cf_privilege P left join sys_button B on P.PrivilegeAccessKey=B.BtnID,cf_user U,sys_menu M where ( (P.PrivilegeMasterKey=U.UserID and U.LoginName='test1' and P.PrivilegeMaster='CF_User' ) or (P.PrivilegeMaster='CF_Role' and P.PrivilegeMasterKey = (select U_R.RoleID from cf_role R,cf_user U,cf_userrole U_R where U.UserID=U_R.UserID and R.RoleID=U_R.RoleID and U.LoginName='test1') ) ) and P.PrivilegeAccess='Sys_Button' and PrivilegeOperation='Permit' AND M.MenuName='订单' and B.MenuNo=M.MenuNo;
-***
 ![查询](https://github.com/oshsx/permission.github.io/blob/master/2.png)
